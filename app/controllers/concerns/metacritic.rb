@@ -47,11 +47,12 @@ module Metacritic
 
 	def metacritic_url_valid?(url)
 		user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
+		page = ""
 
 		begin
 			page = Nokogiri::HTML(open(url, 'User-Agent' => user_agent), nil, "UTF-8")
     rescue OpenURI::HTTPError => ex
-      return nil
+      page = nil
     end
 
 	  return page
@@ -84,7 +85,6 @@ module Metacritic
 		games = []
 		google_search_api_key = "AIzaSyB7Zw7yzjKjGKC_AcnmpqC_QA8cC_l0mvc" 
 		custom_search_code = "010005874503195795540:k0fg9etgjoa"
-		#https://www.googleapis.com/customsearch/v1?key=#{google_search_api_key}&cx=#{custom_search_code}&q=#{game}
 		html = "https://www.googleapis.com/customsearch/v1?key=AIzaSyB7Zw7yzjKjGKC_AcnmpqC_QA8cC_l0mvc&cx=010005874503195795540:k0fg9etgjoa&q=#{game}"
 
 		begin

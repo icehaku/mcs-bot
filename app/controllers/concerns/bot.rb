@@ -2,8 +2,8 @@ module Bot
   extend ActiveSupport::Concern
 
   def observer(params)
-    ttoken = 'bot309984878:AAG2sTeB3TiQA-7d-AyntSle1o2i6KegGBA' #MCS-Bot
-    token = '366193367:AAH1-G2EtqJmbbKRnwcUyhmuNdRBT11Ry1I' #Ice Debug Bot
+    ttoken = '' #MCS-Bot
+    token = '' #Ice Debug Bot
 
     if params["message"].present?
     	chat_id = params["message"]["chat"]["id"]
@@ -15,34 +15,43 @@ module Bot
     	bot = Telegram::Bot::Client.new(token)
 
 	    games.each do |game|
-	    	if game['erro'] == "erro"
-	    		text = game['erro_msg']
-	    		bot.send_message chat_id: chat_id, text: text
-	    	else
-		    	text = "\xF0\x9F\x91\xBE <b>#{game['game_name']}</b>\n<b>Console</b>:#{game['console']}\n<b>Metascore</b>: #{game['metascore']}\n<b>Userscore</b>: #{game['userscore']}"
-		    	bot.send_message chat_id: chat_id, text: text, parse_mode: "HTML"
-		    	bot.send_photo chat_id: chat_id, photo: game['image']
-		    	#emojis = http://apps.timwhitlock.info/emoji/tables/unicode
-		    end
+	    	game = game.dup
+	    	begin
+		    	if game['erro'] == "erro"
+		    		text = game['erro_msg']
+		    		bot.send_message chat_id: chat_id, text: text
+		    	else
+			    	text = "\xF0\x9F\x91\xBE <b>#{game['game_name']}</b>\n<b>Console</b>:#{game['console']}\n<b>Metascore</b>: #{game['metascore']}\n<b>Userscore</b>: #{game['userscore']}"
+			    	bot.send_message chat_id: chat_id, text: text, parse_mode: "HTML"
+			    	bot.send_photo chat_id: chat_id, photo: game['image']
+			    	#emojis = http://apps.timwhitlock.info/emoji/tables/unicode
+			    end
+			  rescue
+			  	return
+			  end
 	    end
 	  end
   end
 
 
 	def check_commands(command)
-		command = command.split(" ")
+		if command.present?
+			command = command.split(" ")
 
-		commands = [
-			"/mcs",
-			"/help",
-			"/plataforms",
-		]
+			commands = [
+				"/mcs",
+				"/help",
+				"/plataforms",
+			]
 
-		if commands.include?(command[0])
-			command[0]
+			if commands.include?(command[0]) and command.length > 1
+				command[0]
+			else
+				nil
+			end
 		else
 			nil
-		end		
+		end
 	end
 
 
