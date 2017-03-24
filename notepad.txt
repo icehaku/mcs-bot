@@ -20,8 +20,14 @@ def igdb(param)
 	#https://www.igdb.com/
 end
 
-https://api.telegram.org/bot366193367:AAH1-G2EtqJmbbKRnwcUyhmuNdRBT11Ry1I/setWebhook?url=https://c4787a6c.ngrok.io/webhooks/telegram_XY9wMhL0M9Y0B2DBt0H22HFd01969KaB
+https://api.telegram.org/bot350328660:AAGWpPvLjrHihatk_OhCioDWGHEyjYh2Pts/setWebhook?url=https://metacritic-bot.herokuapp.com/webhooks/telegram_XY9wMhL0M9Y0B2DBt0H22HFd01969KaB
 
 
 https://core.telegram.org/bots/api#inline-mode
 https://telegram.org/blog/inline-bots
+
+
+
+
+
+350328660:AAGWpPvLjrHihatk_OhCioDWGHEyjYh2Pts

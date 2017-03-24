@@ -65,7 +65,8 @@ module InlineBot
         thumb_url: "http://www.headslinger.com/feed_img/1000565.jpg",
         description: game["description"],
         input_message_content: {
-          message_text: game["url"],
+          parse_mode: "HTML",
+          message_text: "\xF0\x9F\x91\xBE <b>#{game['name']}</b>\n<b>Console</b>: #{game['platform']}\n<b>Metascore</b>: #{game['metascore']}\n<b>Release</b>: #{game['release']}\n#{game['description']}\n#{game['url']}",
         },
       }
     end
