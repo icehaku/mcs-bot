@@ -1,24 +1,6 @@
-# README
+A inline Telegram Bot to get metacritic.com game score;
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+About telegran inline bots:
+https://core.telegram.org/bots/inline
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+bot call name: @metacritic_game_bot
