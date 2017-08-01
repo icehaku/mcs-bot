@@ -58,7 +58,7 @@ module InlineBot
         thumb_url: game["image"],
         input_message_content: {
           parse_mode: "HTML",
-          message_text: "\xF0\x9F\x91\xBE <b>#{game['name']}</b>\n<b>Console</b>: #{game['platform']}\n<b>Metascore</b>: #{game['metascore']}\n<b>User Score</b>: #{get_metacritic_image_userscore_by_url(game['url'])[1]}\n<b>Release</b>: #{game['release']}\n#{game['description']}\n#{game['url']}",
+          message_text: "\xF0\x9F\x91\xBE <b>#{game['name']}</b>\n<b>Console</b>: #{game['platform']}\n<b>Metascore</b>: #{game['metascore']}\n<b>Release</b>: #{game['release']}\n#{game['description']}\n#{game['url']}",
         },
       }
     end
