@@ -58,7 +58,7 @@ module InlineBot
         thumb_url: game["image"],
         input_message_content: {
           parse_mode: "HTML",
-          message_text: "\xF0\x9F\x91\xBE <b>#{game['name']}</b>\n<b>Console</b>: #{game['platform']}\n<b>Metascore</b>: #{game['metascore']}\n<b>Release</b>: #{game['release']}\n#{game['description']}\n#{game['url']}",
+          message_text: "\xF0\x9F\x91\xBE <b>#{game['name']}</b>\n<b>Console</b>: #{game['platform']}\n<b>Metascore</b>: #{game['metascore']}\n<b>Release</b>: #{game['release']}\n#{get_metacritic_image_userscore_by_url(game["url"])[1]}\n#{game['description']}\n#{game['url']}",
         },
       }
     end
@@ -72,7 +72,7 @@ module InlineBot
       user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
       url = "http://www.metacritic.com#{url}"
       page = Nokogiri::HTML(open(url, 'User-Agent' => user_agent), nil, "UTF-8")
-      image = page.css("img.product_image.large_image")[0].values[1]
+      image = page.css("img.product_image.large_image")[0].values[1]    
       userscore = page.css("div.product_scores").css("div.metascore_w.user.large.game")[0].text
       [image, userscore]
     rescue
