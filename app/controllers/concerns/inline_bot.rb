@@ -35,7 +35,7 @@ module InlineBot
 					game["url"] = "http://www.metacritic.com#{game["url"]}"
           if game["metascore"].present?
             game["image"] = set_metascore_image(game["metascore"])
-            game["metascore"] = "MS:#{game['metascore']}"            
+            game["metascore"] = "#{game['metascore']}"            
           else
             game["image"] = "http://www.headslinger.com/feed_img/1000565.jpg"
           end          
@@ -52,7 +52,7 @@ module InlineBot
     results = games.map.with_index do |game, index|
       {
         type: "article",
-        title: "#{game['name']}(#{game['platform']}) #{game['metascore']}",
+        title: "#{game['name']}(#{game['platform']}) MS:#{game['metascore']}",
         id: index.to_s,
         description: game["description"],
         thumb_url: game["image"],
