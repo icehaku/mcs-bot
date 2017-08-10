@@ -1,33 +1,33 @@
 module InlineBot
   extend ActiveSupport::Concern
 
-	def inline(params)
+  def inline(params)
     token = '350328660:AAGWpPvLjrHihatk_OhCioDWGHEyjYh2Pts' #Metacritic Game Score Bot
     bot = Telegram::Bot::Client.new(token)
 
     if params["inline_query"].present?
-    	inline_query_id = params["inline_query"]["id"]
-    	query = params["inline_query"]["query"]
+      inline_query_id = params["inline_query"]["id"]
+      query = params["inline_query"]["query"]
     end
 
-		url = URI.encode("http://www.metacritic.com/search/all/#{query}/results")
-		user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
+    url = URI.encode("http://www.metacritic.com/search/all/#{query}/results")
+    user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
 
-		begin
-			html_result = Nokogiri::HTML(open(url, 'User-Agent' => user_agent), nil, "UTF-8")
+    begin
+      html_result = Nokogiri::HTML(open(url, 'User-Agent' => user_agent), nil, "UTF-8")
     rescue
-    	html_result = nil
+      html_result = nil
     end
 
     if html_result.present?
-    	html_result = html_result.css("li.result")
+      html_result = html_result.css("li.result")
 
       games = parse_scraped_games(html_result)
       telegram_inline_result = create_telegram_inline_result(games)
 
       bot.answer_inline_query inline_query_id: inline_query_id, results: telegram_inline_result
-	  end
-	end
+    end
+  end
 
 
   def parse_scraped_games(results)
