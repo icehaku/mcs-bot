@@ -20,7 +20,7 @@ module InlineBot
     end
 
     if html_result.present?
-      html_result = html_result.css("li.result")
+      html_result = html_result.css("ul.search_results").css("li")
 
       games = parse_scraped_games(html_result)
       telegram_inline_result = create_telegram_inline_result(games)
@@ -36,19 +36,21 @@ module InlineBot
     results.each do |result|
       if result.css("div.result_type").css("strong").text == "Game"
         game = Hash.new()
-        game["name"] = result.css("a").text
-        game["release"] = result.css("li.stat.release_date").css("span.data").text
-        game["platform"] = result.css("span.platform").text
-        game["metascore"] = result.css("span.metascore_w").text
-        game["description"] = result.css("p.deck.basic_stat").text
-        game["url"] = result.css("a")[0]['href']
+        game["name"] = result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("h3").css("a").text.strip rescue ""
+        game["release"] = "XX/XX"
+        #result.css("li.stat.release_date").css("span.data").text
+        game["platform"] = result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("p").css("span").text rescue ""
+        game["metascore"] = result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("span").first.text rescue ""
+        game["description"] = result.css("div.result_wrap").css("p.deck").text rescue ""
+        game["url"] = result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("h3").css("a").attribute("href").text rescue ""
         game["url"] = "http://www.metacritic.com#{game["url"]}"
-        if game["metascore"].present?
-          game["image"] = set_metascore_image(game["metascore"])
-          game["metascore"] = "#{game['metascore']}"
-        else
-          game["image"] = "http://www.headslinger.com/feed_img/1000565.jpg"
-        end
+        game["image"] = result.css("div.result_wrap").css("div.result_thumbnail").css("img").first.attribute("src").text rescue ""
+        #if game["metascore"].present?
+        #  game["image"] = set_metascore_image(game["metascore"])
+        #  game["metascore"] = "#{game['metascore']}"
+        #else
+        #  game["image"] = "http://www.headslinger.com/feed_img/1000565.jpg"
+        #end
         #game["image_userscore"] = get_metacritic_image_userscore_by_url(game["url"])
 
         games << game
