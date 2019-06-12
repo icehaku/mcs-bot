@@ -15,7 +15,8 @@ print "lul1"
 print "lul2"
     begin
       html_result = Nokogiri::HTML(open(url, 'User-Agent' => user_agent), nil, "UTF-8")
-    rescue
+    rescue Exception => e
+      print e.message
       html_result = nil
     end
 print "lul3"
