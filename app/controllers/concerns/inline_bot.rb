@@ -4,7 +4,7 @@ module InlineBot
   def inline(params)
     token = '350328660:AAGWpPvLjrHihatk_OhCioDWGHEyjYh2Pts' #Metacritic Game Score Bot
     bot = Telegram::Bot::Client.new(token)
-
+print "lul1"
     if params["inline_query"].present?
       inline_query_id = params["inline_query"]["id"]
       query = params["inline_query"]["query"]
@@ -12,20 +12,21 @@ module InlineBot
 
     url = URI.encode("http://www.metacritic.com/search/all/#{query}/results")
     user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
-
+print "lul2"
     begin
       html_result = Nokogiri::HTML(open(url, 'User-Agent' => user_agent), nil, "UTF-8")
     rescue
       html_result = nil
     end
-
+print "lul3"
     if html_result.present?
       html_result = html_result.css("ul.search_results").css("li")
-
+print "lul4"
       games = parse_scraped_games(html_result)
       telegram_inline_result = create_telegram_inline_result(games)
 
       bot.answer_inline_query inline_query_id: inline_query_id, results: telegram_inline_result
+print "lul5"      
     end
   end
 
@@ -34,7 +35,9 @@ module InlineBot
     games = []
 
     results.each do |result|
+      print "lul7"
       if result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("p").text.include?("Game")
+        print "lul6"
         game = Hash.new()
         game["name"] = result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("h3").css("a").text.strip rescue ""
         game["release"] = "XX/XX"
@@ -89,6 +92,7 @@ module InlineBot
 
 
   def create_telegram_inline_result(games)
+    print "lul9"
     games.map.with_index do |game, index|
       {
         type: "article",
