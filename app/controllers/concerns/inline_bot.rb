@@ -34,7 +34,7 @@ module InlineBot
     games = []
 
     results.each do |result|
-      if result.css("div.result_type").css("strong").text == "Game"
+      if result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("p").text.include?("Game")
         game = Hash.new()
         game["name"] = result.css("div.result_wrap").css("div.basic_stats").css("div.main_stats").css("h3").css("a").text.strip rescue ""
         game["release"] = "XX/XX"
